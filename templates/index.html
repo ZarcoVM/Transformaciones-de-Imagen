@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformaciones de Imagen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .transform-buttons {
+            margin: 20px 0;
+        }
+        .transform-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Transformaciones de Imagen</h1>
+        <form id="transform-form" method="post">
+            <div class="transform-buttons">
+                <button type="button" onclick="aplicarTransformacion('cizallado')">Cizallado</button>
+                <button type="button" onclick="aplicarTransformacion('traslacion')">Traslación</button>
+                <button type="button" onclick="aplicarTransformacion('rotacion')">Rotación</button>
+                <button type="button" onclick="aplicarTransformacion('escalamiento')">Escalamiento</button>
+            </div>
+        </form>
+        <div class="image-container">
+            <img id="imagen-transformada" src="{{ url_for('static', filename='lambo.jpg') }}" alt="Imagen Transformada">
+        </div>
+    </div>
+
+    <script>
+        function aplicarTransformacion(transformacion) {
+            var form = document.getElementById('transform-form');
+            var formData = new FormData();
+            formData.append('transformacion', transformacion);
+
+            fetch('/transformar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var url = URL.createObjectURL(blob);
+                document.getElementById('imagen-transformada').src = url;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
