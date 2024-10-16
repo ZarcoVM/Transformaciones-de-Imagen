@@ -33,10 +33,12 @@ def aplicar_rotacion(image):
     return aplicar_transformacion_matriz(image, matriz_rotacion)
 
 # Función para aplicar transformación usando matriz de escalamiento
+
 def aplicar_escalamiento(image):
     matriz_escalamiento = [1.5, 0, 0,
                            0, 1.5, 0]
     return aplicar_transformacion_matriz(image, matriz_escalamiento)
+
 
 # Función para aplicar la transformación usando la matriz dada
 def aplicar_transformacion_matriz(image, matriz):
@@ -53,6 +55,7 @@ def transformar():
     transformacion = request.form.get('transformacion')
 
     # Cargar la imagen predeterminada
+    
     image = cargar_imagen_predeterminada()
 
     # Redimensionar la imagen
@@ -69,11 +72,13 @@ def transformar():
         image = aplicar_escalamiento(image)
 
     # Guardar la imagen transformada en un buffer
+    
     img_io = io.BytesIO()
     image.save(img_io, 'PNG')
     img_io.seek(0)
 
     return send_file(img_io, mimetype='image/png')
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
