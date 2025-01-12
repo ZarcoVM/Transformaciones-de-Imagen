@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file  
-from PIL import Image
+from PIL import Image 
 import numpy as np
 import io
 
